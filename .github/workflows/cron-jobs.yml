@@ -1,0 +1,66 @@
+name: Cron jobs
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  push:
+    branches: [master]
+
+jobs:
+  affiliate:
+    name: Affiliate program
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [test, production]
+
+    steps:
+      - run: curl --silent --show-error --fail "https://affiliate.swingby.network/api/$MODE/earners/process?secret=$API_SECRET"
+        timeout-minutes: 2
+        env:
+          API_SECRET: ${{ secrets.AFFILIATE_API_SECRET }}
+          MODE: ${{ matrix.mode }}
+
+  metanodes:
+    name: Metanodes API
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [testnet, production]
+        bridge: [btc_erc, btc_bep20]
+        task: [rewards, churns, "active-nodes"]
+
+    steps:
+      - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/$MODE/$BRIDGE/process/$TASK?secret=$API_SECRET"
+        timeout-minutes: 2
+        env:
+          API_SECRET: ${{ secrets.METANODES_API_SECRET }}
+          MODE: ${{ matrix.mode }}
+          BRIDGE: ${{ matrix.bridge }}
+          TASK: ${{ matrix.task }}
+
+  graph:
+    name: GraphQL API
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: ["testnet.", ""]
+        bridge: [btc_erc, btc_bep20]
+        task:
+          - "swaps-and-withdrawals/latest"
+          - "swaps-and-withdrawals/pending"
+          - "deposits/latest"
+          - "deposits/pending"
+          - nodes
+
+    steps:
+      - run: curl --silent --show-error --fail "https://${MODE}graph.skybridge.info/api/v1/$BRIDGE/process/$TASK?secret=$API_SECRET"
+        if: ${{ !((matrix.mode == '') && (matrix.bridge == 'btc_bep20')) }}
+        timeout-minutes: 2
+        env:
+          API_SECRET: ${{ secrets.GRAPH_API_SECRET }}
+          MODE: ${{ matrix.mode }}
+          BRIDGE: ${{ matrix.bridge }}
+          TASK: ${{ matrix.task }}
