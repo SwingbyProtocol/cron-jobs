@@ -57,7 +57,6 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://${MODE}graph.skybridge.info/api/v1/$BRIDGE/process/$TASK?secret=$API_SECRET"
-        if: ${{ !((matrix.mode == '') && (matrix.bridge == 'btc_bep20')) }}
         timeout-minutes: 2
         env:
           API_SECRET: ${{ secrets.GRAPH_API_SECRET }}
