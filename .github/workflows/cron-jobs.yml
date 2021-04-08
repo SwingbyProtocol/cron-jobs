@@ -29,7 +29,7 @@ jobs:
       matrix:
         mode: [testnet, production]
         bridge: [btc_erc, btc_bep20]
-        task: [rewards, churns, "active-nodes"]
+        task: [rewards, churns, "active-nodes", floats]
 
     steps:
       - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/$MODE/$BRIDGE/process/$TASK?secret=$API_SECRET"
