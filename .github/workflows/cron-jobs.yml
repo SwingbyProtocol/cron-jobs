@@ -84,7 +84,7 @@ jobs:
       fail-fast: false
       matrix:
         network: [ethereum, goerli, bsc, bsct]
-        task: [deposits, payments]
+        task: [deposits, payments, pending-payments]
 
     steps:
       - run: curl --silent --show-error --fail "https://bridge.swingby.network/api/v1/process/$NETWORK/$TASK?secret=$API_SECRET"
