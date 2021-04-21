@@ -35,6 +35,7 @@ jobs:
 
   metanodes-matrix:
     name: Metanodes API
+    needs: metanodes-generic
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
