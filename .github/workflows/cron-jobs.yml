@@ -32,7 +32,11 @@ jobs:
         task: [rewards, churns, "active-nodes", floats]
 
     steps:
-      - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/$MODE/$BRIDGE/process/$TASK?secret=$API_SECRET"
+      - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/process/vwap-prices?secret=$API_SECRET"
+        timeout-minutes: 2
+        env:
+          API_SECRET: ${{ secrets.METANODES_API_SECRET }}
+      - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
         timeout-minutes: 2
         env:
           API_SECRET: ${{ secrets.METANODES_API_SECRET }}
