@@ -32,6 +32,14 @@ jobs:
         timeout-minutes: 2
         env:
           API_SECRET: ${{ secrets.METANODES_API_SECRET }}
+      - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/process/production/bonds?secret=$API_SECRET"
+        timeout-minutes: 2
+        env:
+          API_SECRET: ${{ secrets.METANODES_API_SECRET }}
+      - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/process/test/bonds?secret=$API_SECRET"
+        timeout-minutes: 2
+        env:
+          API_SECRET: ${{ secrets.METANODES_API_SECRET }}
 
   metanodes-matrix:
     name: Metanodes API
