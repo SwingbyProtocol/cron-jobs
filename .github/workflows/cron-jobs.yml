@@ -120,7 +120,7 @@ jobs:
           NETWORK: ${{ matrix.network }}
           TASK: ${{ matrix.task }}
 
-  swingby-bridge-failed-payments:
+  swingby-bridge-payments:
     name: Swingby Bridge
     needs: [swingby-bridge-deposits, swingby-bridge-failed-payments]
     runs-on: ubuntu-latest
