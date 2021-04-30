@@ -85,50 +85,14 @@ jobs:
           BRIDGE: ${{ matrix.bridge }}
           TASK: ${{ matrix.task }}
 
-  swingby-bridge-deposits:
+  swingby-bridge:
     name: Swingby Bridge
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         network: [ethereum, goerli, bsc, bsct]
-        task: [deposits, pending-payments]
-
-    steps:
-      - run: curl --silent --show-error --fail "https://bridge.swingby.network/api/v1/process/$NETWORK/$TASK?secret=$API_SECRET"
-        timeout-minutes: 2
-        env:
-          API_SECRET: ${{ secrets.SWINGBY_BRIDGE_API_SECRET }}
-          NETWORK: ${{ matrix.network }}
-          TASK: ${{ matrix.task }}
-
-  swingby-bridge-failed-payments:
-    name: Swingby Bridge
-    needs: swingby-bridge-deposits
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        network: [ethereum, goerli, bsc, bsct]
-        task: [failed-payments]
-
-    steps:
-      - run: curl --silent --show-error --fail "https://bridge.swingby.network/api/v1/process/$NETWORK/$TASK?secret=$API_SECRET"
-        timeout-minutes: 2
-        env:
-          API_SECRET: ${{ secrets.SWINGBY_BRIDGE_API_SECRET }}
-          NETWORK: ${{ matrix.network }}
-          TASK: ${{ matrix.task }}
-
-  swingby-bridge-failed-payments:
-    name: Swingby Bridge
-    needs: [swingby-bridge-deposits, swingby-bridge-failed-payments]
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        network: [ethereum, goerli, bsc, bsct]
-        task: [payments]
+        task: [deposits, payments, pending-payments, failed-payments]
 
     steps:
       - run: curl --silent --show-error --fail "https://bridge.swingby.network/api/v1/process/$NETWORK/$TASK?secret=$API_SECRET"
