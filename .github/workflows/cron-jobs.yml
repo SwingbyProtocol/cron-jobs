@@ -32,7 +32,7 @@ jobs:
         task: ["active-nodes", peers]
 
     steps:
-      - run: curl --silent --show-error --fail "https://network.skybridge.exchange/api/v3/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
+      - run: curl --silent --show-error --fail "https://network.skybridge.exchange/api/v3/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
         timeout-minutes: 2
         env:
           API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
