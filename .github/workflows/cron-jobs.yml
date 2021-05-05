@@ -21,6 +21,25 @@ jobs:
           API_SECRET: ${{ secrets.AFFILIATE_API_SECRET }}
           MODE: ${{ matrix.mode }}
 
+  network-api:
+    name: Skybridge network
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [test, production]
+        bridge: [btc_erc, btc_bep20]
+        task: ["active-nodes", peers]
+
+    steps:
+      - run: curl --silent --show-error --fail "https://network.skybridge.exchange/api/v3/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
+        timeout-minutes: 2
+        env:
+          API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
+          MODE: ${{ matrix.mode }}
+          BRIDGE: ${{ matrix.bridge }}
+          TASK: ${{ matrix.task }}
+
   metanodes-generic:
     name: Metanodes API (generic)
     runs-on: ubuntu-latest
