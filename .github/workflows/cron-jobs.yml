@@ -30,7 +30,7 @@ jobs:
         task: [ips]
 
     steps:
-      - run: curl --silent --show-error --fail "https://network.skybridge.exchange/api/v3/process/$TASK?secret=$API_SECRET"
+      - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$TASK?secret=$API_SECRET"
         timeout-minutes: 2
         env:
           API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
@@ -47,7 +47,7 @@ jobs:
         task: ["active-nodes", peers, churns]
 
     steps:
-      - run: curl --silent --show-error --fail "https://network.skybridge.exchange/api/v3/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
+      - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
         timeout-minutes: 2
         env:
           API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
