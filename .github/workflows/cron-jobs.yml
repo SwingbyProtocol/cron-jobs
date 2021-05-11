@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://affiliate.swingby.network/api/$MODE/earners/process?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.AFFILIATE_API_SECRET }}
           MODE: ${{ matrix.mode }}
@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$TASK?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
           TASK: ${{ matrix.task }}
@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$TASK?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
           MODE: ${{ matrix.mode }}
@@ -65,7 +65,7 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
           MODE: ${{ matrix.mode }}
@@ -80,15 +80,15 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/process/vwap-prices?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.METANODES_API_SECRET }}
       - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/process/production/bonds?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.METANODES_API_SECRET }}
       - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/process/test/bonds?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.METANODES_API_SECRET }}
 
@@ -105,7 +105,7 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://metanode-earnings.vercel.app/api/v1/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.METANODES_API_SECRET }}
           MODE: ${{ matrix.mode }}
@@ -129,7 +129,7 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://${MODE}graph.skybridge.info/api/v1/$BRIDGE/process/$TASK?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.GRAPH_API_SECRET }}
           MODE: ${{ matrix.mode }}
@@ -147,7 +147,7 @@ jobs:
 
     steps:
       - run: curl --silent --show-error --fail "https://bridge.swingby.network/api/v1/process/$NETWORK/$TASK?secret=$API_SECRET"
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.SWINGBY_BRIDGE_API_SECRET }}
           NETWORK: ${{ matrix.network }}
