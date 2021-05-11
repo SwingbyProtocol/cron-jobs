@@ -27,13 +27,30 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        task: [ips]
+        task: [ips, "vwap-prices"]
 
     steps:
       - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$TASK?secret=$API_SECRET"
         timeout-minutes: 2
         env:
           API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
+          TASK: ${{ matrix.task }}
+
+  network-api-with-mode:
+    name: Skybridge network
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [test, production]
+        task: ["staking-rewards"]
+
+    steps:
+      - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$TASK?secret=$API_SECRET"
+        timeout-minutes: 2
+        env:
+          API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
+          MODE: ${{ matrix.mode }}
           TASK: ${{ matrix.task }}
 
   network-api-with-mode-and-bridge:
@@ -44,7 +61,7 @@ jobs:
       matrix:
         mode: [test, production]
         bridge: [btc_erc, btc_bep20]
-        task: ["active-nodes", peers, churns]
+        task: ["active-nodes", "bridge-rewards", peers, churns]
 
     steps:
       - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
