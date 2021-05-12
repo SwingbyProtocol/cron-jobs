@@ -146,7 +146,7 @@ jobs:
         task: [deposits, payments, pending-payments, failed-payments]
 
     steps:
-      - run: curl --silent --show-error --fail "https://bridge.swingby.network/api/v1/process/$NETWORK/$TASK?secret=$API_SECRET"
+      - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/swingby-token-bridge/api/v1/process/$NETWORK/$TASK?secret=$API_SECRET"
         timeout-minutes: 10
         env:
           API_SECRET: ${{ secrets.SWINGBY_BRIDGE_API_SECRET }}
