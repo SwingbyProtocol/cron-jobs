@@ -61,7 +61,7 @@ jobs:
       matrix:
         mode: [test, production]
         bridge: [btc_erc, btc_bep20]
-        task: ["active-nodes", "bridge-rewards", peers, churns]
+        task: ["active-nodes", "bridge-rewards", peers, churns, floats]
 
     steps:
       - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
