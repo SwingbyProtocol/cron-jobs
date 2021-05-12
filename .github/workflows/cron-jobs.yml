@@ -22,7 +22,7 @@ jobs:
           MODE: ${{ matrix.mode }}
 
   network-api-generic:
-    name: Skybridge network
+    name: Network API
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -37,7 +37,7 @@ jobs:
           TASK: ${{ matrix.task }}
 
   network-api-with-mode:
-    name: Skybridge network
+    name: Network API
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -54,7 +54,7 @@ jobs:
           TASK: ${{ matrix.task }}
 
   network-api-with-mode-and-bridge:
-    name: Skybridge network
+    name: Network API
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
