@@ -43,7 +43,7 @@ jobs:
       fail-fast: false
       matrix:
         mode: [test, production]
-        task: ["staking-rewards"]
+        task: ["staking-rewards", "rewards-ranking"]
 
     steps:
       - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$TASK?secret=$API_SECRET"
@@ -61,7 +61,7 @@ jobs:
       matrix:
         mode: [test, production]
         bridge: [btc_erc, btc_bep20]
-        task: ["active-nodes", "bridge-rewards", peers, churns, floats]
+        task: ["active-nodes", "bridge-rewards", churns, floats, peers]
 
     steps:
       - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
