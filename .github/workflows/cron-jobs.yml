@@ -21,57 +21,6 @@ jobs:
           API_SECRET: ${{ secrets.AFFILIATE_API_SECRET }}
           MODE: ${{ matrix.mode }}
 
-  network-api-generic:
-    name: Network API
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        task: [ips, "vwap-prices"]
-
-    steps:
-      - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$TASK?secret=$API_SECRET"
-        timeout-minutes: 10
-        env:
-          API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
-          TASK: ${{ matrix.task }}
-
-  network-api-with-mode:
-    name: Network API
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        mode: [test, production]
-        task: ["staking-rewards", "rewards-ranking"]
-
-    steps:
-      - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$TASK?secret=$API_SECRET"
-        timeout-minutes: 10
-        env:
-          API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
-          MODE: ${{ matrix.mode }}
-          TASK: ${{ matrix.task }}
-
-  network-api-with-mode-and-bridge:
-    name: Network API
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        mode: [test, production]
-        bridge: [btc_erc, btc_bep20]
-        task: ["active-nodes", "bridge-rewards", churns, floats, peers]
-
-    steps:
-      - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/network-api/api/v3/process/$MODE/$BRIDGE/$TASK?secret=$API_SECRET"
-        timeout-minutes: 10
-        env:
-          API_SECRET: ${{ secrets.NETWORK_API_SECRET }}
-          MODE: ${{ matrix.mode }}
-          BRIDGE: ${{ matrix.bridge }}
-          TASK: ${{ matrix.task }}
-
   metanodes-generic:
     name: Metanodes API (generic)
     runs-on: ubuntu-latest
@@ -134,21 +83,4 @@ jobs:
           API_SECRET: ${{ secrets.GRAPH_API_SECRET }}
           MODE: ${{ matrix.mode }}
           BRIDGE: ${{ matrix.bridge }}
-          TASK: ${{ matrix.task }}
-
-  swingby-bridge:
-    name: Swingby Bridge
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        network: [ethereum, goerli, bsc, bsct]
-        task: [deposits, payments, pending-payments, failed-payments]
-
-    steps:
-      - run: curl --silent --show-error --fail "https://k8s.skybridge.exchange/swingby-token-bridge/api/v1/process/$NETWORK/$TASK?secret=$API_SECRET"
-        timeout-minutes: 10
-        env:
-          API_SECRET: ${{ secrets.SWINGBY_BRIDGE_API_SECRET }}
-          NETWORK: ${{ matrix.network }}
           TASK: ${{ matrix.task }}
